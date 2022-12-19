@@ -1,4 +1,5 @@
 import { Alchemy, Network } from "alchemy-sdk";
+import { utils } from "ethers";
 
 const settings = {
   apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
@@ -22,4 +23,11 @@ export async function _getTransaction(txHash) {
   const tx = await alchemy.transact.getTransaction(txHash);
   // console.log(tx);
   return tx;
+}
+
+export async function _getBalance(address) {
+  const balance = await alchemy.core.getBalance(address);
+  const eth = utils.formatEther(balance);
+  // console.log(`\nETH Balance of ${address} --> ${eth} ETH\n`);
+  return eth;
 }

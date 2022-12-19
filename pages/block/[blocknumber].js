@@ -1,35 +1,38 @@
-import { _getBlock } from "../../helpers/sdk-utils";
 import { useEffect, useState } from "react";
 import styles from "../../styles/Home.module.css";
 import { useRouter } from "next/router";
 import { Container, Row, Col } from "reactstrap";
 import Link from "next/link";
+import { utils } from "ethers";
+import { _getBlock } from "../../helpers/sdk-utils";
 
-function BlockPage() {
-  const router = useRouter();
-  const [block, setBlock] = useState();
-  const [isLoading, setLoading] = useState(false);
-  const blockNumber = router.query.blocknumber;
-  useEffect(() => {
-    setLoading(true);
-    _getBlock(blockNumber).then((data) => {
-      setBlock(data);
-      setLoading(false);
-    });
-  }, []);
+function BlockPage(props) {
+  const { blockInfo } = props;
+  const block = blockInfo;
 
-  if (isLoading) return <p>Loading...</p>;
-  if (!block) return <p>No block data</p>;
+  if (!block) {
+    return (
+      <>
+        <p>No block found.</p>
+      </>
+    );
+  }
 
   return (
     <main className={styles.main}>
       <Container className={styles.description}>
         <Row>
           <Col sm>
-            <span>Block Number: {blockNumber}</span>
+            <span>Block Number: {block.number}</span>
           </Col>
           <Col sm>
             <span>Block Hash: {block?.hash}</span>
+          </Col>
+          <Col sm>
+            <span>Gas Fee Per Gas: {block?.baseFeePerGas}</span>
+          </Col>
+          <Col sm>
+            <span>Difficulty: {block?._difficulty}</span>
           </Col>
           <Col sm>
             <span>Transaction count: {block?.transactions?.length} </span>
@@ -37,7 +40,7 @@ function BlockPage() {
               <Col>
                 {block?.transactions?.map((txHash, i) => (
                   <div className={styles.grid}>
-                    <Row sm key={i}>
+                    <Row key={i}>
                       {i + 1}
                       <div>
                         <Link href={`/tx/${txHash}`} passHref>
@@ -57,3 +60,38 @@ function BlockPage() {
 }
 
 export default BlockPage;
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: "blocking",
+  };
+}
+
+export async function getStaticProps(context) {
+  const { params } = context;
+  const blocknumber = params.blocknumber;
+  const blockInfo = await _getBlock(blocknumber);
+
+  console.log(blockInfo._difficulty);
+
+  if (!blockInfo) {
+    return { notFound: true };
+  }
+  const { gasLimit, gasUsed, baseFeePerGas, _difficulty, ...newBlockInfo } =
+    blockInfo;
+
+  return {
+    props: {
+      blockInfo: {
+        ...newBlockInfo,
+        gasLimit: utils.formatEther(gasLimit),
+        gasUsed: utils.formatEther(gasUsed),
+        baseFeePerGas: utils.formatEther(baseFeePerGas),
+        _difficulty: utils.formatEther(_difficulty),
+      },
+    },
+    revalidate: 10,
+    notFound: !blockInfo,
+  };
+}

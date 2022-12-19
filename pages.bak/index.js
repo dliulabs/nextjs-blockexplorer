@@ -4,6 +4,13 @@ import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 import { _getBlockNumber } from "../helpers/sdk-utils";
 
+// const settings = {
+//   apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
+//   network: Network.ETH_MAINNET,
+// };
+
+// const alchemy = new Alchemy(settings);
+
 function Home() {
   const [blockNumber, setBlockNumber] = useState([]);
   _getBlockNumber().then((bn) => setBlockNumber(() => bn));
