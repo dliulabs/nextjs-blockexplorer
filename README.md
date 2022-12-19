@@ -1,4 +1,4 @@
-# A Quick Start Blockchain Explorer uisng Alchemy SDK
+# A Quick Start Block Explorer using Alchemy SDK
 
 [Alchemy SDK](https://docs.alchemy.com/reference/alchemy-sdk-quickstart)
 
