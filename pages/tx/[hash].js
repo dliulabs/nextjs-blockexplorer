@@ -110,22 +110,24 @@ export async function getStaticProps(context) {
     maxPriorityFeePerGas,
     value,
     gasLimit,
-    gasUsed,
+    // gasUsed,
     maxFeePerGas,
     wait,
     ...newTransaction
   } = transaction;
 
+  const toBigNumber = (v) => (v ? utils.formatEther(v) : 0);
+
   return {
     props: {
       txInfo: {
         ...newTransaction,
-        gasPrice: utils.formatEther(gasPrice),
-        maxPriorityFeePerGas: utils.formatEther(maxPriorityFeePerGas),
-        value: utils.formatEther(value),
-        gasLimit: utils.formatEther(gasLimit),
-        // gasUsed: utils.formatEther(gasUsed),
-        maxFeePerGas: utils.formatEther(maxFeePerGas),
+        gasPrice: toBigNumber(gasPrice),
+        maxPriorityFeePerGas: toBigNumber(maxPriorityFeePerGas),
+        value: toBigNumber(value),
+        gasLimit: toBigNumber(gasLimit),
+        // gasUsed: utils.formatEther(gasUsed) || 0,
+        maxFeePerGas: toBigNumber(maxFeePerGas),
       },
     },
     revalidate: 10,

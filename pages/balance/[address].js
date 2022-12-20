@@ -34,33 +34,6 @@ function BalancePage(props) {
 
 export default BalancePage;
 
-// export async function getStaticPaths() {
-//   return {
-//     paths: [],
-//     fallback: "blocking",
-//   };
-// }
-
-// export async function getStaticProps(context) {
-//   const { params } = context;
-//   const address = params.address;
-//   const balance = await _getBalance(address);
-
-//   if (!balance) {
-//     return { notFound: true };
-//   }
-//   return {
-//     props: {
-//       data: {
-//         address: address,
-//         balance: balance,
-//       },
-//     },
-//     revalidate: 10,
-//     notFound: !balance,
-//   };
-// }
-
 export async function getStaticPaths() {
   return {
     paths: [],

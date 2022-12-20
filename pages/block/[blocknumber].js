@@ -73,22 +73,22 @@ export async function getStaticProps(context) {
   const blocknumber = params.blocknumber;
   const blockInfo = await _getBlock(blocknumber);
 
-  console.log(blockInfo._difficulty);
-
   if (!blockInfo) {
     return { notFound: true };
   }
   const { gasLimit, gasUsed, baseFeePerGas, _difficulty, ...newBlockInfo } =
     blockInfo;
 
+  const toBigNumber = (v) => (v ? utils.formatEther(v) : 0);
+
   return {
     props: {
       blockInfo: {
         ...newBlockInfo,
-        gasLimit: utils.formatEther(gasLimit),
-        gasUsed: utils.formatEther(gasUsed),
-        baseFeePerGas: utils.formatEther(baseFeePerGas),
-        _difficulty: utils.formatEther(_difficulty),
+        gasLimit: toBigNumber(gasLimit),
+        gasUsed: toBigNumber(gasUsed),
+        baseFeePerGas: toBigNumber(baseFeePerGas),
+        _difficulty: toBigNumber(_difficulty),
       },
     },
     revalidate: 10,
