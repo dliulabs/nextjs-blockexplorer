@@ -22,10 +22,10 @@ function BlockPage(props) {
     <main className={styles.main}>
       <Container className={styles.description}>
         <Row>
-          <Col sm>
+          <Col sm key="hash">
             <span>Transaction Hash: {transaction.hash}</span>
           </Col>
-          <Col sm>
+          <Col sm key="number">
             <div className={styles.grid}>
               Block Number:
               <div>
@@ -36,7 +36,7 @@ function BlockPage(props) {
             </div>
             {/* <span>Block Number: {transaction.blockNumber}</span> */}
           </Col>
-          <Col sm>
+          <Col sm key="from">
             <div className={styles.grid}>
               From:
               <div>
@@ -46,7 +46,7 @@ function BlockPage(props) {
               </div>
             </div>
           </Col>
-          <Col sm>
+          <Col sm key="to">
             <div className={styles.grid}>
               To:
               <div>
@@ -56,18 +56,18 @@ function BlockPage(props) {
               </div>
             </div>
           </Col>
-          <Col sm>
+          <Col sm key="value">
             <span>Value: {transaction.value} ETH</span>
           </Col>
-          <Col sm>
+          <Col sm key="gasPrice">
             <span>Gas Price: {transaction.gasPrice} ETH</span>
           </Col>
-          <Col sm>
+          <Col sm key="gasLimit">
             <span>
               Gas Limit: {transaction.gasLimit && transaction.gasLimit} ETH
             </span>
           </Col>
-          <Col sm>
+          <Col sm key="maxPriorityFeePerGas">
             <span>
               Max Priority Fee Per Gas:{" "}
               {transaction?.maxPriorityFeePerGas &&
@@ -75,7 +75,7 @@ function BlockPage(props) {
               ETH
             </span>
           </Col>
-          <Col sm>
+          <Col sm key="maxFeePerGas">
             <span>
               Max Fee Per Gas:{" "}
               {transaction?.maxFeePerGas && transaction?.maxFeePerGas} ETH
