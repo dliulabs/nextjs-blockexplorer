@@ -10,6 +10,12 @@
   },
   "dependencies": {
     "@next/font": "13.0.7",
+    "@uniswap/widgets": "^2.22.12",
+    "@walletconnect/ethereum-provider": "^2.1.4",
+    "@walletconnect/jsonrpc-provider": "^1.0.6",
+    "jotai-immer": "^0.1.0",
+    "qs": "^6.11.0",
+    "react-redux": "^8.0.5",
     "ethers": "^5.7.2",
     "next": "13.0.7",
     "react": "18.2.0",

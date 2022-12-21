@@ -22,27 +22,27 @@ function BlockPage(props) {
     <main className={styles.main}>
       <Container className={styles.description}>
         <Row>
-          <Col sm>
+          <Col sm key="number">
             <span>Block Number: {block.number}</span>
           </Col>
-          <Col sm>
+          <Col sm key="hash">
             <span>Block Hash: {block?.hash}</span>
           </Col>
-          <Col sm>
+          <Col sm key="baseFeePerGas">
             <span>Gas Fee Per Gas: {block?.baseFeePerGas}</span>
           </Col>
-          <Col sm>
+          <Col sm key="_difficulty">
             <span>Difficulty: {block?._difficulty}</span>
           </Col>
-          <Col sm>
+          <Col sm key="count">
             <span>Transaction count: {block?.transactions?.length} </span>
             <Container className={styles.description}>
-              <Col>
+              <Col key="txHash">
                 {block?.transactions?.map((txHash, i) => (
-                  <div className={styles.grid}>
+                  <div className={styles.grid} key={i}>
                     <Row key={i}>
                       {i + 1}
-                      <div>
+                      <div key={i}>
                         <Link href={`/tx/${txHash}`} passHref>
                           {txHash}
                         </Link>
